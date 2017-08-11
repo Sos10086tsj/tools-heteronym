@@ -1,0 +1,5 @@
+[name]
+na:娜
+shan:单
+[word]
+enuo:婀娜
