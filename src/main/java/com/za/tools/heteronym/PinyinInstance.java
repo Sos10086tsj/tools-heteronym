@@ -66,23 +66,13 @@ public class PinyinInstance {
 	 * @throws Exception 
 	 */
 	public String getPinyin(String str, String separator, PinyinFormat format, PinyinLibraryCategory... categories) throws Exception {
-		boolean hasWord = false;
-		for (PinyinLibraryCategory category : categories) {
-			if (category.equals(PinyinLibraryCategory.WORD)) {
-				hasWord = true;
-				break;
-			}
-		}
 		for (PinyinLibraryCategory category : categories) {
 			String pinyin = hitLibrary(str, category, separator, format);
 			if (null != pinyin) {
 				return pinyin;
 			}
 		}
-		if (!hasWord) {
-			return hitLibrary(str, PinyinLibraryCategory.WORD, separator, format);
-		}
-		return null;
+		return PinyinHelper.convertToPinyinString(str, separator, format).toUpperCase();
 	}
 	
 	/**
@@ -122,10 +112,11 @@ public class PinyinInstance {
 				return lib.getPinyin();
 			}
 		}
-		return PinyinHelper.convertToPinyinString(str, separator, format).toUpperCase();
+		return null;
 	}
 	
 	private String handerPartyMatch(PinyinLibrary library, String str, String separator, PinyinFormat format) throws Exception {
+		boolean match = false;
 		int length = str.length();
 		String[] pinyin = new String[length];
 		for (int i = 0; i < length; i++) {
@@ -133,18 +124,23 @@ public class PinyinInstance {
 			for (PinyinLibraryItem lib : library.getItems()) {
 				if (lib.getCharacters().contains(s)) {
 					pinyin[i] = lib.getPinyin();
+					match = true;
 				}
 			}
 		}
-		for (int i = 0; i < length; i++) {
-			if (StringUtils.isEmpty(pinyin[i])) {
-				pinyin[i] = PinyinHelper.convertToPinyinString(String.valueOf(str.charAt(i)), separator, format).toUpperCase();
+		if (match) {
+			for (int i = 0; i < length; i++) {
+				if (StringUtils.isEmpty(pinyin[i])) {
+					pinyin[i] = PinyinHelper.convertToPinyinString(String.valueOf(str.charAt(i)), separator, format).toUpperCase();
+				}
 			}
+			StringBuilder builder = new StringBuilder();
+			for (int i = 0; i < length; i++) {
+				builder.append(pinyin[i]);
+			}
+			return builder.toString();
+		}else {
+			return null;
 		}
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < length; i++) {
-			builder.append(pinyin[i]);
-		}
-		return builder.toString();
 	}
 }
