@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
+import com.za.tools.ResourceHelper;
 import com.za.tools.heteronym.model.PinyinLibrary;
 import com.za.tools.heteronym.model.PinyinLibraryItem;
 
@@ -37,20 +38,20 @@ public class PinyinInstance {
 			instance = new PinyinInstance();
 		}
 		if (null == libraries) {
-			libraries = ResourceHelper.loadLibrary(null, null);
+			libraries = ResourceHelper.loadPinyinLibrary(null, null);
 		}
 		return instance;
 	}
 	
 	public static PinyinInstance newInstance(InputStream is, Charset charset) {
 		instance = new PinyinInstance();
-		libraries = ResourceHelper.loadLibrary(is, charset);
+		libraries = ResourceHelper.loadPinyinLibrary(is, charset);
 		return instance;
 	}
 	
 	public static PinyinInstance newInstance(String classpath, Charset charset) {
 		instance = new PinyinInstance();
-		libraries = ResourceHelper.loadClasspathLibrary(classpath, charset);
+		libraries = ResourceHelper.loadPinyinClasspathLibrary(classpath, charset);
 		return instance;
 	}
 	

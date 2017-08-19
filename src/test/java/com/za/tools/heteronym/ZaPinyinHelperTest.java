@@ -11,10 +11,10 @@ public class ZaPinyinHelperTest extends TestCase {
 			String s1 = ZaPinyinHelper.convertToPinyinString("李娜", "", PinyinFormat.WITHOUT_TONE);
 			System.out.println("s1:" + s1);
 			
-			String s2 = ZaPinyinHelper.convertToPinyinString("李娜", "", PinyinFormat.WITHOUT_TONE, PinyinLibraryCategory.NAME);
+			String s2 = ZaPinyinHelper.convertToPinyinString("李娜", "", PinyinFormat.WITHOUT_TONE, PinyinLibraryCategory.WORD,PinyinLibraryCategory.NAME);
 			System.out.println("s2:" + s2);
 			
-			String s3 = ZaPinyinHelper.convertToPinyinString("婀娜", "", PinyinFormat.WITHOUT_TONE, PinyinLibraryCategory.WORD);
+			String s3 = ZaPinyinHelper.convertToPinyinString("婀娜", "", PinyinFormat.WITHOUT_TONE, PinyinLibraryCategory.WORD, PinyinLibraryCategory.NAME);
 			System.out.println("s3:" + s3);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
